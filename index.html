@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container" style="width: 50%; margin: 40px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <h2 class="text-center">Translate</h2>
+        <form>
+            <div class="form-group">
+                <label for="input">Enter text to translate:</label>
+                <textarea class="form-control" id="input" rows="5" placeholder="Type here..."></textarea>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example" style="margin-bottom: 20px;">
+                <button type="button" class="btn btn-primary" onclick="translateToCypher()">Translate to Cypher</button>
+                <button type="button" class="btn btn-primary" onclick="translateFromCypher()">Translate from Cypher</button>
+            </div>
+        </form>
+        <div class="alert alert-info" id="result" style="margin-top: 20px; padding: 10px; position: relative;">
+            <span id="result-text"></span>
+        </div>
+        <button type="button" class="btn btn-secondary" id="copy-btn" style="margin-top: 10px;" onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+const cypher = {
+            "A": "Alethi",
+            "B": "Bridgeman",
+            "C": "Cosmere",
+            "D": "Desolation",
+            "E": "Edgedancer",
+            "F": "Fabrial",
+            "G": "Gemstone",
+            "H": "Highprince",
+            "I": "Iri",
+            "J": "Jezrien",
+            "K": "Kaladin",
+            "L": "Luminous",
+            "M": "Mistborn",
+            "N": "Navani",
+            "O": "Oathbringer",
+            "P": "Parshendi",
+            "Q": "Queen",
+            "R": "Radiant",
+            "S": "Shallan",
+            "T": "Taln",
+            "U": "Urithiru",
+            "V": "Veden",
+            "W": "Windrunner",
+            "X": "Xandar",
+            "Y": "Year",
+            "Z": "Zahel",
+            " ": "Aether",
+            "!": "Abandon",
+            "@": "Amaranthine",
+            "#": "Aetherblade",
+            "$": "Ancient",
+            "%": "Ardent",
+            "^": "Ash",
+            "&": "Augur",
+            "*": "Axiom",
+            "(": "Bane",
+            ")": "Bounty",
+            "-": "Breach",
+            "_": "Bridle",
+            "=": "Catacendre",
+            "+": "Covenant",
+            "[": "Cryptic",
+            "]": "Daggers",
+            "{": "Dawn",
+            "}": "Dusk",
+            "|": "Elegy",
+            ":": "Eminence",
+            ";": "Endless",
+            "<": "Eternal",
+            ">": "Expanse",
+            ",": "Fathom",
+            ".": "Fervent",
+            "/": "Flame",
+            "?": "Forsaken",
+        };
+
+        const reverseCypher = {};
+        for (const key in cypher) {
+            reverseCypher[cypher[key]] = key;
+        }
+
+        function translateToCypher() {
+            const input = document.getElementById('input').value.toUpperCase();
+            let result = '';
+            for (let i = 0; i < input.length; i++) {
+                if (input[i] in cypher) {
+                    result += cypher[input[i]] + ' ';
+                } else {
+                    result += input[i] + ' (not found in cypher) ';
+                }
+            }
+            document.getElementById('result-text').innerText = result;
+        }
+
+        function translateFromCypher() {
+            const input = document.getElementById('input').value;
+            let result = '';
+            const words = input.split(' ');
+            for (let i = 0; i < words.length; i++) {
+                if (words[i] in reverseCypher) {
+                    result += reverseCypher[words[i]];
+                } else {
+                    result += words[i] + ' (not found in cypher) ';
+                }
+            }
+            document.getElementById('result-text').innerText = result;
+        }
+
+        function copyToClipboard() {
+            const result = document.getElementById('result-text').innerText;
+            navigator.clipboard.writeText(result).then(() => {
+                alert('Copied to clipboard!');
+            }, () => {
+                alert('Failed to copy to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
